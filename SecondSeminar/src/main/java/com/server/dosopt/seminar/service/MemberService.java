@@ -52,7 +52,7 @@ public class MemberService {
     @Transactional
     public Member update(Long id, MemberUpdateRequest request) {
         Member member = findById(id);
-        member.updateMember(request.getName(), request.getNickname(), request.getAge());
+        member.updateMember(request.name(), request.nickname(), request.age());
         return member;
     }
 
