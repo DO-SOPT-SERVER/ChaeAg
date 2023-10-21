@@ -3,6 +3,7 @@ package com.server.dosopt.seminar.controller;
 import com.server.dosopt.seminar.domain.Message;
 import com.server.dosopt.seminar.dto.MemberCreateRequest;
 import com.server.dosopt.seminar.dto.MemberGetResponse;
+import com.server.dosopt.seminar.dto.MemberUpdateRequest;
 import com.server.dosopt.seminar.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -44,4 +45,17 @@ public class MemberController {
         return ResponseEntity.created(location).build();
     }
 
+    // 멤버 수정
+    @PutMapping("{memberId}")
+    public ResponseEntity<MemberGetResponse> updateMember(@PathVariable Long memberId, @RequestBody MemberUpdateRequest request) {
+        MemberGetResponse memberGetResponse = memberService.update(memberId, request);
+        return ResponseEntity.ok().body(memberGetResponse);
+    }
+
+    // 멤버 삭제
+    @DeleteMapping("{memberId}")
+    public ResponseEntity<MemberGetResponse> deleteMember(@PathVariable Long memberId) {
+        MemberGetResponse memberGetResponse = memberService.delete(memberId);
+        return ResponseEntity.ok().body(memberGetResponse);
+    }
 }
