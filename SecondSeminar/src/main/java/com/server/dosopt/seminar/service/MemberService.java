@@ -40,27 +40,27 @@ public class MemberService {
     }
 
     @Transactional
-    public String create(MemberCreateRequest request) {
+    public Member create(MemberCreateRequest request) {
         return memberRepository.save(Member.builder()
                         .name(request.name())
                         .nickname(request.nickname())
                         .age(request.age())
                         .sopt(request.sopt())
-                        .build()).getId().toString();
+                        .build());
     }
 
     @Transactional
-    public MemberGetResponse update(Long id, MemberUpdateRequest request) {
+    public Member update(Long id, MemberUpdateRequest request) {
         Member member = findById(id);
         member.updateMember(request.getName(), request.getNickname(), request.getAge());
-        return MemberGetResponse.of(member);
+        return member;
     }
 
     @Transactional
-    public MemberGetResponse delete(Long id) {
+    public Member delete(Long id) {
         Member member = findById(id);
         memberRepository.delete(member);
-        return MemberGetResponse.of(member);
+        return member;
     }
 
     private Member findById(Long memberId) {
