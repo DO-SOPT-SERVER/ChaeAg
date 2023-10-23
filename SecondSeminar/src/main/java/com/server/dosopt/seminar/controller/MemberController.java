@@ -17,11 +17,12 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/member")
+@RequestMapping("/api/members")
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
     private final Message message = new Message();
+    private Member member;
 
     private void setMessage(StatusEnum status, MessageEnum type, Object data) {
         message.setStatus(status);
@@ -51,7 +52,7 @@ public class MemberController {
     // 멤버 생성
     @PostMapping
     public ResponseEntity<Message> createMember(@RequestBody MemberCreateRequest request) {
-        Member member = memberService.create(request);
+        member = memberService.create(request);
         URI location = URI.create("api/member/" + member.getId().toString());
         setMessage(StatusEnum.OK, MessageEnum.CRETAE, member);
         return ResponseEntity.created(location).body(message);
@@ -60,7 +61,7 @@ public class MemberController {
     // 멤버 수정
     @PutMapping("{memberId}")
     public ResponseEntity<Message> updateMember(@PathVariable Long memberId, @RequestBody MemberUpdateRequest request) {
-        Member member = memberService.update(memberId, request);
+        member = memberService.update(memberId, request);
         setMessage(StatusEnum.OK, MessageEnum.UPDATE, member);
         return ResponseEntity.ok().body(message);
     }
@@ -68,7 +69,7 @@ public class MemberController {
     // 멤버 삭제
     @DeleteMapping("{memberId}")
     public ResponseEntity<Message> deleteMember(@PathVariable Long memberId) {
-        Member member = memberService.delete(memberId);
+        member = memberService.delete(memberId);
         setMessage(StatusEnum.OK, MessageEnum.DELETE, member);
         return ResponseEntity.ok().body(message);
     }
