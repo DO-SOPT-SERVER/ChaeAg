@@ -50,15 +50,15 @@ public class MemberService {
     }
 
     @Transactional
-    public Member update(Long id, MemberUpdateRequest request) {
-        Member member = findById(id);
+    public Member update(Long memberId, MemberUpdateRequest request) {
+        Member member = findById(memberId);
         member.updateMember(request.name(), request.nickname(), request.age());
         return member;
     }
 
     @Transactional
-    public Member delete(Long id) {
-        Member member = findById(id);
+    public Member delete(Long memberId) {
+        Member member = findById(memberId);
         memberRepository.delete(member);
         return member;
     }
