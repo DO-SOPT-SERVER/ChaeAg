@@ -1,11 +1,12 @@
 package com.server.dosopt.seminar.controller;
 
+import com.server.dosopt.seminar.domain.Message;
+import com.server.dosopt.seminar.domain.MessageEnum;
+import com.server.dosopt.seminar.domain.Post;
+import com.server.dosopt.seminar.domain.StatusEnum;
 import com.server.dosopt.seminar.dto.request.post.PostCreateRequest;
-import com.server.dosopt.seminar.dto.response.post.PostGetResponse;
-import com.server.dosopt.seminar.exception.BusinessException;
 import com.server.dosopt.seminar.service.PostService;
 import java.net.URI;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,19 +25,20 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("{postId}")
-    public ResponseEntity<PostGetResponse> getPostById(@PathVariable Long postId) {
-        return ResponseEntity.ok(postService.getById(postId));
+    public ResponseEntity<Message> getPostById(@PathVariable Long postId) {
+        return ResponseEntity.ok().body(Message.of(StatusEnum.OK, MessageEnum.SELECT, postService.getById(postId)));
     }
 
     @GetMapping
-    public ResponseEntity<List<PostGetResponse>> getPosts(@RequestHeader(CUSTOM_AUTH_ID) Long memberId) {
-        return ResponseEntity.ok(postService.getPosts(memberId));
+    public ResponseEntity<Message> getPosts(@RequestHeader(CUSTOM_AUTH_ID) Long memberId) {
+        return ResponseEntity.ok().body(Message.of(StatusEnum.OK, MessageEnum.SELECT, postService.getPosts(memberId)));
     }
 
     @PostMapping
-    public ResponseEntity<Void> createPost(@RequestHeader(CUSTOM_AUTH_ID) Long memberId,
+    public ResponseEntity<Message> createPost(@RequestHeader(CUSTOM_AUTH_ID) Long memberId,
                                            @RequestBody PostCreateRequest request) {
-        URI location = URI.create("/api/post/" + postService.create(request, memberId));
-        return ResponseEntity.created(location).build();
+        Post post = postService.create(request, memberId);
+        URI location = URI.create("/api/post/" + post.getId().toString());
+        return ResponseEntity.created(location).body(Message.of(StatusEnum.OK, MessageEnum.CRETAE, post));
     }
 }

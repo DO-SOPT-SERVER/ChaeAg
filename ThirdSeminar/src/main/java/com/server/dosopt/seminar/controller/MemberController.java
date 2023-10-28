@@ -21,15 +21,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
-    private final Message message = new Message();
-    private Member member;
-
-    private void setMessage(StatusEnum status, MessageEnum type, Object data) {
-        message.setStatus(status);
-        message.setMessage(type.message());
-        message.setData(data);
-    }
-
 
     // 특정 멤버 조회 (예외 처리 X)
     @GetMapping("/{memberId}")
@@ -52,25 +43,22 @@ public class MemberController {
     // 멤버 생성
     @PostMapping
     public ResponseEntity<Message> createMember(@RequestBody MemberCreateRequest request) {
-        member = memberService.create(request);
+        Member member = memberService.create(request);
         URI location = URI.create("api/member/" + member.getId().toString());
-        setMessage(StatusEnum.OK, MessageEnum.CRETAE, member);
-        return ResponseEntity.created(location).body(message);
+        return ResponseEntity.created(location).body(Message.of(StatusEnum.OK, MessageEnum.CRETAE, member));
     }
 
     // 멤버 수정
     @PutMapping("{memberId}")
     public ResponseEntity<Message> updateMember(@PathVariable Long memberId, @RequestBody MemberUpdateRequest request) {
-        member = memberService.update(memberId, request);
-        setMessage(StatusEnum.OK, MessageEnum.UPDATE, member);
-        return ResponseEntity.ok().body(message);
+        Member member = memberService.update(memberId, request);
+        return ResponseEntity.ok().body(Message.of(StatusEnum.OK, MessageEnum.UPDATE, member));
     }
 
     // 멤버 삭제
     @DeleteMapping("{memberId}")
     public ResponseEntity<Message> deleteMember(@PathVariable Long memberId) {
-        member = memberService.delete(memberId);
-        setMessage(StatusEnum.OK, MessageEnum.DELETE, member);
-        return ResponseEntity.ok().body(message);
+        Member member = memberService.delete(memberId);
+        return ResponseEntity.ok().body(Message.of(StatusEnum.OK, MessageEnum.DELETE, member));
     }
 }
