@@ -8,6 +8,6 @@ import lombok.Getter;
 @Embeddable
 @Getter
 @EqualsAndHashCode
-public class CategoryId implements Serializable {
-    private String categoryId;
+public class MemberId implements Serializable {
+    private String memberId;
 }
