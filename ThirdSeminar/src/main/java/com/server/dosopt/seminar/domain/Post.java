@@ -19,8 +19,6 @@ public class Post extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    private String imageUrl;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
@@ -30,25 +28,10 @@ public class Post extends BaseTimeEntity {
     private CategoryId categoryId;
 
     @Builder
-    public Post(String title, String content, Member member) {
+    public Post(String title, String content, Member member, CategoryId categoryId) {
         this.title = title;
         this.content = content;
         this.member = member;
-    }
-
-    @Builder(builderMethodName = "builderWithImageUrl") // 빌더에 이름 지정
-    public Post(String title, String content, String imageUrl, Member member) {
-        this.title = title;
-        this.content = content;
-        this.imageUrl = imageUrl;
-        this.member = member;
-    }
-
-    public void updateContent(String content) {
-        this.content = content;
-    }
-
-    public void addCategory(CategoryId categoryId) {
         this.categoryId = categoryId;
     }
 }

@@ -7,11 +7,10 @@ import com.server.dosopt.seminar.dto.request.post.PostCreateRequest;
 import com.server.dosopt.seminar.dto.response.post.PostGetResponse;
 import com.server.dosopt.seminar.repository.MemberJpaRepository;
 import com.server.dosopt.seminar.repository.PostJpaRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -25,12 +24,12 @@ public class PostService {
     @Transactional
     public Post create(PostCreateRequest request, Long memberId) {
         Member member = memberJpaRepository.findByIdOrThrow(memberId); // 비영속 상태
-        Post post = Post.builder()
-                .member(member)
-                .title(request.title())
-                .content(request.content()).build();
-        post.addCategory(request.categoryId());
-        return postJpaRepository.save(post);
+        return postJpaRepository.save( // save() -> 저장한 entity 반환
+                    Post.builder()
+                        .member(member)
+                        .title(request.title())
+                        .content(request.content())
+                        .categoryId(request.categoryId()).build());
     }
 
     public PostGetResponse getById(Long postId) {
