@@ -46,8 +46,8 @@ jobs:
 
     - name: docker image 빌드 및 푸시
       run: |
-        docker build --platform linux/amd64 -t sunseo18/do-sopt-seminar .
-        docker push sunseo18/do-sopt-seminar
+        docker build --platform linux/amd64 -t chaeag/do-sopt-seminar .
+        docker push chaeag/do-sopt-seminar
       working-directory: ${{ env.working-directory }}
 
   deploy-cd:      
