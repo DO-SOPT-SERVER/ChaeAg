@@ -27,7 +27,7 @@ public class HealthCheckController {
 
     @GetMapping("/v3")
     public String healthCheckV3() {
-        return "지ㅏㄴ?짜된다";
+        return "z";
     }
 
     @GetMapping("/v4")
