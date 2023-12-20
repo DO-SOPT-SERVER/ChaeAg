@@ -16,10 +16,10 @@ jobs:
 
     - name: Set up JDK 17
       uses: actions/setup-java@v3
-	      with:
-        distribution: 'corretto'
-        java-version: '17'
-
+      with:
+          distribution: 'corretto'
+          java-version: '17'
+	  
     - name: application.yaml 생성
       run: | 
           cd src/main/resources
