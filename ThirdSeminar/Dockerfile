@@ -11,7 +11,7 @@ WORKDIR /app
 
 # COPY {Dockerfile을 기준으로 container에 넣고자 하는 내용의 경로} {container내에 복사할 경로}
 # host machine의 파일/디렉토리를 컨테이너 내 경로에 복사
-COPY ./build/libs/seminar-0.0.1-SNAPSHOT.jar /app/seminar.jar
+COPY ./build/libs/ThirdSeminar-0.0.1-SNAPSHOT.jar /app/seminar.jar
 
 # 컨테이너가 실행될 때 실행할 명령어 지정
 # 위에서 workdir를 /app으로 지정해줬기 때문에 해당 명령어는 /app에서 실행됨
