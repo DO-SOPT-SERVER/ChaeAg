@@ -19,7 +19,7 @@ jobs:
       with:
           distribution: 'corretto'
           java-version: '17'
-	  
+
     - name: application.yaml 생성
       run: | 
           cd src/main/resources
