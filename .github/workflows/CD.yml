@@ -8,7 +8,7 @@ jobs:
   deploy-ci:
     runs-on: ubuntu-22.04
     env:
-      working-directory: Second Seminar/SecondSeminar
+      working-directory: ThirdSeminar
 
     steps: 
     - name: 체크아웃
@@ -46,8 +46,8 @@ jobs:
 
     - name: docker image 빌드 및 푸시
       run: |
-        docker build --platform linux/amd64 -t sunseo18/do-sopt-seminar .
-        docker push sunseo18/do-sopt-seminar
+        docker build --platform linux/amd64 -t chaeag/do-sopt-seminar .
+        docker push chaeag/do-sopt-seminar
       working-directory: ${{ env.working-directory }}
 
   deploy-cd:      
@@ -63,6 +63,6 @@ jobs:
         host: ${{ secrets.RELEASE_SERVER_IP }}
         username: ${{ secrets.RELEASE_SERVER_USER }}
         key: ${{ secrets.RELEASE_SERVER_KEY }}
-        script: |
-					cd ~
+        script: | 
+          cd ~
           ./deploy.sh
